@@ -1,6 +1,8 @@
 # C/C++ 面试知识总结
 
-为 2018 年春招总结的 C/C++ 面试知识，只为复习、分享。部分知识点与图片来自网络，侵删。欢迎 star，欢迎 issues。
+C/C++ 面试知识总结，只为复习、分享。部分知识点与图片来自网络，侵删。
+
+勘误请 Issue、Pull，新增请 Issue，建议、讨论请 [# issues/12](https://github.com/huihut/interview/issues/12)
 
 ## 使用建议
 
@@ -102,7 +104,7 @@ int* const function7();     // 返回一个指向变量的常指针，使用：i
 
 ### this 指针
 
-1. `this` 指针是一个隐含于每一个成员函数中的特殊指针。它指向正在被该成员函数操作的那个对象。
+1. `this` 指针是一个隐含于每一个非静态成员函数中的特殊指针。它指向正在被该成员函数操作的那个对象。
 2. 当对一个对象调用成员函数时，编译程序先将对象的地址赋给 `this` 指针，然后调用成员函数，每次成员函数存取数据成员时，由隐含使用 `this` 指针。
 3. 当一个成员函数被调用时，自动向它传递一个隐含的参数，该参数是一个指向这个成员函数所在的对象的指针。
 4. `this` 指针被隐含地声明为: `ClassName *const this`，这意味着不能给 `this` 指针赋值；在 `ClassName` 类的 `const` 成员函数中，`this` 指针的类型为：`const ClassName* const`，这说明不能对 `this` 指针所指向的这种对象是不可修改的（即不能对这种对象的数据成员进行赋值操作）；
@@ -1224,11 +1226,6 @@ hash_multiset|hash表|无序|可重复|
 hash_map|hash表|无序|不可重复|
 hash_multimap|hash表|无序|可重复|
 
-### STL 空间配置器如何处理内存的？能说一下它的大概实现方案吗？为什么是 8Bytes 的倍数？
-
-* 大于 128Bytes 用 malloc 直接申请
-* 小于 128Bytes 使用一个 8Bytes 倍数的数组来进行申请（原因是为了提高效率，同时对于 64 位的机器而言，地址大小为 8Bytes）
-
 ## 数据结构
 
 ### 顺序结构
@@ -1672,7 +1669,7 @@ typedef struct BiTNode
 [插入排序](Algorithm/InsertSort.h) | O(n<sup>2</sup>)|O(n<sup>2</sup>)|O(1)|稳定
 [快速排序](Algorithm/QuickSort.h) | O(n*log<sub>2</sub>n) |  O(n<sup>2</sup>) | O(log<sub>2</sub>n) | 不稳定
 [堆排序](Algorithm/HeapSort.cpp) | O(n*log<sub>2</sub>n)|O(n<sup>2</sup>)|O(1)|不稳定
-[归并排序](Algorithm/MergeSort.h) | O(n*log<sub>2</sub>n) | O(n*log<sub>2</sub>n)|O(1)|稳定
+[归并排序](Algorithm/MergeSort.h) | O(n*log<sub>2</sub>n) | O(n*log<sub>2</sub>n)|O(n)|稳定
 [希尔排序](Algorithm/ShellSort.h) | O(n*log<sup>2</sup>n)|O(n<sup>2</sup>)|O(1)|不稳定
 [计数排序](Algorithm/CountSort.cpp) | O(n+m)|O(n+m)|O(n+m)|稳定
 [桶排序](Algorithm/BucketSort.cpp) | O(n)|O(n)|O(m)|稳定
@@ -1697,6 +1694,21 @@ typedef struct BiTNode
 [红黑树](DataStructure/RedBlackTree.cpp) |O(log<sub>2</sub>n) | |
 2-3树 | O(log<sub>2</sub>n - log<sub>3</sub>n) |   | 
 B树/B+树 |O(log<sub>2</sub>n) |   | 
+
+### 图搜索算法
+
+图搜索算法 |数据结构| 遍历时间复杂度 | 空间复杂度
+---|---|---|---
+[BFS广度优先搜索](https://zh.wikipedia.org/wiki/%E5%B9%BF%E5%BA%A6%E4%BC%98%E5%85%88%E6%90%9C%E7%B4%A2)|邻接矩阵<br/>邻接链表|O(\|v\|<sup>2</sup>)<br/>O(\|v\|+\|E\|)|O(\|v\|<sup>2</sup>)<br/>O(\|v\|+\|E\|)
+[DFS深度优先搜索](https://zh.wikipedia.org/wiki/%E6%B7%B1%E5%BA%A6%E4%BC%98%E5%85%88%E6%90%9C%E7%B4%A2)|邻接矩阵<br/>邻接链表|O(\|v\|<sup>2</sup>)<br/>O(\|v\|+\|E\|)|O(\|v\|<sup>2</sup>)<br/>O(\|v\|+\|E\|)
+
+### 其他算法
+
+算法 |思想| 应用
+---|---|---
+[分治法](https://zh.wikipedia.org/wiki/%E5%88%86%E6%B2%BB%E6%B3%95)|把一个复杂的问题分成两个或更多的相同或相似的子问题，直到最后子问题可以简单的直接求解，原问题的解即子问题的解的合并|[循环赛日程安排问题](https://github.com/huihut/interview/tree/master/Problems/RoundRobinProblem)、排序算法（快速排序、归并排序）
+[动态规划](https://zh.wikipedia.org/wiki/%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92)|通过把原问题分解为相对简单的子问题的方式求解复杂问题的方法，适用于有重叠子问题和最优子结构性质的问题|[背包问题](https://github.com/huihut/interview/tree/master/Problems/KnapsackProblem)、斐波那契数列
+[贪心法](https://zh.wikipedia.org/wiki/%E8%B4%AA%E5%BF%83%E6%B3%95)|一种在每一步选择中都采取在当前状态下最好或最优（即最有利）的选择，从而希望导致结果是最好或最优的算法|旅行推销员问题（最短路径问题）、最小生成树、哈夫曼编码
 
 ## Problems
 
@@ -2182,6 +2194,41 @@ TCP 是一个基于字节流的传输服务（UDP 基于报文的），“流”
 * 在数据包之间设置边界，如添加特殊符号 `\r\n` 标记。FTP 协议正是这么做的。但问题在于如果数据正文中也含有 `\r\n`，则会误判为消息的边界。
 * 使用更加复杂的应用层协议。
 
+#### TCP 流量控制
+
+##### 概念
+
+流量控制（flow control）就是让发送方的发送速率不要太快，要让接收方来得及接收。
+
+##### 方法
+
+<details><summary>利用可变窗口进行流量控制</summary>
+
+![](images/利用可变窗口进行流量控制举例.png)
+
+</details>
+
+#### TCP 拥塞控制
+
+##### 概念
+
+拥塞控制就是防止过多的数据注入到网络中，这样可以使网络中的路由器或链路不致过载。
+
+##### 方法
+
+* 慢开始( slow-start )
+* 拥塞避免( congestion avoidance )
+* 快重传( fast retransmit )
+* 快恢复( fast recovery )
+
+<details><summary>TCP的拥塞控制图</summary>
+
+![](images/TCP拥塞窗口cwnd在拥塞控制时的变化情况.png)
+![](images/快重传示意图.png)
+![](images/TCP的拥塞控制流程图.png)
+
+</details>
+
 #### TCP 传输连接管理
 
 > 因为 TCP 三次握手建立连接、四次挥手释放连接很重要，所以附上《计算机网络（第 7 版）-谢希仁》书中对此章的详细描述：<https://github.com/huihut/interview/blob/master/images/TCP-transport-connection-management.png>
@@ -2420,6 +2467,30 @@ ssize_t write(int fd, const void *buf, size_t count);
 
 ## 设计模式
 
+> 各大设计模式例子参考：[CSDN专栏 . C++ 设计模式](https://blog.csdn.net/column/details/15392.html) 系列博文
+
+[设计模式工程目录](DesignPattern)
+
+### 单例模式
+
+[单例模式例子](DesignPattern/SingletonPattern)
+
+### 抽象工厂模式
+
+[抽象工厂模式例子](DesignPattern/AbstractFactoryPattern)
+
+### 适配器模式
+
+[适配器模式例子](DesignPattern/AdapterPattern)
+
+### 桥接模式
+
+[桥接模式例子](DesignPattern/BridgePattern)
+
+### 观察者模式
+
+[观察者模式例子](DesignPattern/ObserverPattern)
+
 ### 设计模式的六大原则
 
 * 单一职责原则（SRP，Single Responsibility Principle）
@@ -2428,41 +2499,6 @@ ssize_t write(int fd, const void *buf, size_t count);
 * 接口隔离原则（ISP，Interface Segregation Principle）
 * 迪米特法则（LoD，Law of Demeter）
 * 开放封闭原则（OCP，Open Close Principle）
-
-### 单例模式
-
-```cpp
-// 懒汉式单例模式
-class Singleton
-{
-private:
-	Singleton() { }
-	static Singleton * pInstance;
-public:
-	static Singleton * GetInstance()
-	{
-		if (pInstance == nullptr)
-			pInstance = new Singleton();
-		return pInstance;
-	}
-};
-
-// 线程安全的单例模式
-class Singleton
-{
-private:
-	Singleton() { }
-	~Singleton() { }
-	Singleton(const Singleton &);
-	Singleton & operator = (const Singleton &);
-public:
-	static Singleton & GetInstance()
-	{
-		static Singleton instance;
-		return instance;
-	}
-};
-```
 
 ## 链接装载库
 
@@ -2501,6 +2537,14 @@ public:
 * 没用初始化栈中的指针，指针的值一般会是随机数，之后就直接开始使用指针
 
 ### 编译链接
+
+#### 各平台文件格式
+
+平台 | 可执行文件 | 目标文件 | 动态库/共享对象 | 静态库
+---|---|---|---|---
+Windows|exe|obj|dll|lib
+Unix/Linux|ELF、out|o|so|a
+Mac|Mach-O|o|dylib、tbd、framework|a、framework
 
 #### 编译链接过程
 
@@ -2585,41 +2629,379 @@ Linux 下的共享库就是普通的 ELF 共享对象。
 * `LD_PRELOAD`：指定预先装载的一些共享库甚至是目标文件
 * `LD_DEBUG`：打开动态链接器的调试功能
 
-### Windows 的动态链接库（Dynamic-Link Library）
+#### so 共享库的编写
 
-<details><summary>Windows 动态链接库例子</summary>
+<details><summary>使用 CLion 编写共享库</summary>
 
-DLL 头文件
+创建一个名为 MySharedLib 的共享库
+
+CMakeLists.txt
+
+```cmake
+cmake_minimum_required(VERSION 3.10)
+project(MySharedLib)
+
+set(CMAKE_CXX_STANDARD 11)
+
+add_library(MySharedLib SHARED library.cpp library.h)
+```
+
+library.h
+
 ```cpp
-#ifdef __cplusplus
-extern "C" {
-#endif
+#ifndef MYSHAREDLIB_LIBRARY_H
+#define MYSHAREDLIB_LIBRARY_H
 
-#ifdef _WIN32
-#  ifdef MODULE_API_EXPORTS
-#    define MODULE_API __declspec(dllexport)
-#  else
-#    define MODULE_API __declspec(dllimport)
-#  endif
-#else
-#  define MODULE_API
-#endif
+// 打印 Hello World!
+void hello();
 
-MODULE_API int module_init();
-
-#ifdef __cplusplus
+// 使用可变模版参数求和
+template <typename T>
+T sum(T t)
+{
+    return t;
 }
+template <typename T, typename ...Types>
+T sum(T first, Types ... rest)
+{
+    return first + sum<T>(rest...);
+}
+
 #endif
 ```
 
-DLL 源文件
-```cpp
-#define MODULE_API_EXPORTS
-#include "module.h"
+library.cpp
 
-MODULE_API int module_init()
+```cpp
+#include <iostream>
+#include "library.h"
+
+void hello() {
+    std::cout << "Hello, World!" << std::endl;
+}
+```
+
+</details>
+
+#### so 共享库的使用（被可执行项目调用）
+
+<details><summary>使用 CLion 调用共享库</summary>
+
+创建一个名为 TestSharedLib 的可执行项目
+
+CMakeLists.txt
+
+```cmake
+cmake_minimum_required(VERSION 3.10)
+project(TestSharedLib)
+
+# C++11 编译
+set(CMAKE_CXX_STANDARD 11)
+
+# 头文件路径
+set(INC_DIR /home/xx/code/clion/MySharedLib)
+# 库文件路径
+set(LIB_DIR /home/xx/code/clion/MySharedLib/cmake-build-debug)
+
+include_directories(${INC_DIR})
+link_directories(${LIB_DIR})
+link_libraries(MySharedLib)
+
+add_executable(TestSharedLib main.cpp)
+
+# 链接 MySharedLib 库
+target_link_libraries(TestSharedLib MySharedLib)
+```
+
+main.cpp
+
+```cpp
+#include <iostream>
+#include "library.h"
+using std::cout;
+using std::endl;
+
+int main() {
+
+    hello();
+    cout << "1 + 2 = " << sum(1,2) << endl;
+    cout << "1 + 2 + 3 = " << sum(1,2,3) << endl;
+
+    return 0;
+}
+```
+
+执行结果
+
+```
+Hello, World!
+1 + 2 = 3
+1 + 2 + 3 = 6
+```
+
+</details>
+
+### Windows 应用程序入口函数
+
+* GUI（Graphical User Interface）应用，链接器选项：`/SUBSYSTEM:WINDOWS`
+* CUI（Console User Interface）应用，链接器选项：`/SUBSYSTEM:CONSOLE`
+
+<details><summary>_tWinMain 与 _tmain 函数声明</summary>
+
+```cpp
+Int WINAPI _tWinMain(
+    HINSTANCE hInstanceExe,
+    HINSTANCE,
+    PTSTR pszCmdLine,
+    int nCmdShow);
+
+int _tmain(
+    int argc,
+    TCHAR *argv[],
+    TCHAR *envp[]);
+```
+
+</details>
+
+应用程序类型|入口点函数|嵌入可执行文件的启动函数
+---|---|---
+处理ANSI字符（串）的GUI应用程序|_tWinMain(WinMain)|WinMainCRTSartup
+处理Unicode字符（串）的GUI应用程序|_tWinMain(wWinMain)|wWinMainCRTSartup
+处理ANSI字符（串）的CUI应用程序|_tmain(Main)|mainCRTSartup
+处理Unicode字符（串）的CUI应用程序|_tmain(wMain)|wmainCRTSartup
+动态链接库（Dynamic-Link Library）|DllMain|_DllMainCRTStartup 
+
+### Windows 的动态链接库（Dynamic-Link Library）
+
+> 知识点来自《Windows核心编程（第五版）》
+
+#### 用处
+
+* 扩展了应用程序的特性
+* 简化了项目管理
+* 有助于节省内存
+* 促进了资源的共享
+* 促进了本地化
+* 有助于解决平台间的差异
+* 可以用于特殊目的
+
+#### 注意
+
+* 创建 DLL，事实上是在创建可供一个可执行模块调用的函数
+* 当一个模块提供一个内存分配函数（malloc、new）的时候，它必须同时提供另一个内存释放函数（free、delete）
+* 在使用 C 和 C++ 混编的时候，要使用 extern "C" 修饰符
+* 一个 DLL 可以导出函数、变量（避免导出）、C++ 类（导出导入需要同编译器，否则避免导出）
+* DLL 模块：cpp 文件中的 __declspec(dllexport) 写在 include 头文件之前
+* 调用 DLL 的可执行模块：cpp 文件的 __declspec(dllimport) 之前不应该定义 MYLIBAPI
+
+#### 加载 Windows 程序的搜索顺序
+
+1. 包含可执行文件的目录
+2. Windows 的系统目录，可以通过 GetSystemDirectory 得到
+3. 16 位的系统目录，即 Windows 目录中的 System 子目录
+4. Windows 目录，可以通过 GetWindowsDirectory 得到
+5. 进程的当前目录
+6. PATH 环境变量中所列出的目录
+
+#### DLL 入口函数
+
+<details><summary>DllMain 函数</summary>
+
+```cpp
+BOOL WINAPI DllMain(HINSTANCE hinstDLL, DWORD fdwReason, LPVOID lpvReserved)
 {
-    /* do something useful */
+    switch(fdwReason)
+    {
+    case DLL_PROCESS_ATTACH:
+        // 第一次将一个DLL映射到进程地址空间时调用
+        // The DLL is being mapped into the process' address space.
+        break;
+    case DLL_THREAD_ATTACH:
+        // 当进程创建一个线程的时候，用于告诉DLL执行与线程相关的初始化（非主线程执行）
+        // A thread is bing created.
+        break;
+    case DLL_THREAD_DETACH:
+        // 系统调用 ExitThread 线程退出前，即将终止的线程通过告诉DLL执行与线程相关的清理
+        // A thread is exiting cleanly.
+        break;
+    case DLL_PROCESS_DETACH:
+        // 将一个DLL从进程的地址空间时调用
+        // The DLL is being unmapped from the process' address space.
+        break;
+    }
+    return (TRUE); // Used only for DLL_PROCESS_ATTACH
+}
+```
+
+</details>
+
+#### 载入卸载库
+
+<details><summary>LoadLibrary、LoadLibraryExA、LoadPackagedLibrary、FreeLibrary、FreeLibraryAndExitThread 函数声明</summary>
+
+```cpp
+// 载入库
+HMODULE WINAPI LoadLibrary(
+  _In_ LPCTSTR lpFileName
+);
+HMODULE LoadLibraryExA(
+  LPCSTR lpLibFileName,
+  HANDLE hFile,
+  DWORD  dwFlags
+);
+// 若要在通用 Windows 平台（UWP）应用中加载 Win32 DLL，需要调用 LoadPackagedLibrary，而不是 LoadLibrary 或 LoadLibraryEx
+HMODULE LoadPackagedLibrary(
+  LPCWSTR lpwLibFileName,
+  DWORD   Reserved
+);
+
+// 卸载库
+BOOL WINAPI FreeLibrary(
+  _In_ HMODULE hModule
+);
+// 卸载库和退出线程
+VOID WINAPI FreeLibraryAndExitThread(
+  _In_ HMODULE hModule,
+  _In_ DWORD   dwExitCode
+);
+```
+
+</details>
+
+#### 显示地链接到导出符号
+
+<details><summary>GetProcAddress 函数声明</summary>
+
+```cpp
+FARPROC GetProcAddress(
+  HMODULE hInstDll,
+  PCSTR pszSymbolName  // 只能接受 ANSI 字符串，不能是 Unicode
+);
+```
+
+</details>
+
+#### DumpBin.exe 查看 DLL 信息
+
+在 `VS 的开发人员命令提示符` 使用 `DumpBin.exe` 可查看 DLL 库的导出段（导出的变量、函数、类名的符号）、相对虚拟地址（RVA，relative virtual address）。如：
+```
+DUMPBIN -exports D:\mydll.dll
+```
+
+#### LoadLibrary 与 FreeLibrary 流程图
+
+<details><summary>LoadLibrary 与 FreeLibrary 流程图</summary>
+
+##### LoadLibrary
+
+![WindowsLoadLibrary](http://ojlsgreog.bkt.clouddn.com/WindowsLoadLibrary.png)
+
+##### FreeLibrary
+
+![WindowsFreeLibrary](http://ojlsgreog.bkt.clouddn.com/WindowsFreeLibrary.png)
+
+</details>
+
+#### DLL 库的编写（导出一个 DLL 模块）
+
+<details><summary>DLL 库的编写（导出一个 DLL 模块）</summary>
+DLL 头文件
+
+```cpp
+// MyLib.h
+
+#ifdef MYLIBAPI
+
+// MYLIBAPI 应该在全部 DLL 源文件的 include "Mylib.h" 之前被定义
+// 全部函数/变量正在被导出
+
+#else
+
+// 这个头文件被一个exe源代码模块包含，意味着全部函数/变量被导入
+#define MYLIBAPI extern "C" __declspec(dllimport)
+
+#endif
+
+// 这里定义任何的数据结构和符号
+
+// 定义导出的变量（避免导出变量）
+MYLIBAPI int g_nResult;
+
+// 定义导出函数原型
+MYLIBAPI int Add(int nLeft, int nRight);
+```
+
+DLL 源文件
+
+```cpp
+// MyLibFile1.cpp
+
+// 包含标准Windows和C运行时头文件
+#include <windows.h>
+
+// DLL源码文件导出的函数和变量
+#define MYLIBAPI extern "C" __declspec(dllexport)
+
+// 包含导出的数据结构、符号、函数、变量
+#include "MyLib.h"
+
+// 将此DLL源代码文件的代码放在此处
+int g_nResult;
+
+int Add(int nLeft, int nRight)
+{
+    g_nResult = nLeft + nRight;
+    return g_nResult;
+}
+```
+
+</details>
+
+#### DLL 库的使用（运行时动态链接 DLL）
+
+<details><summary>DLL 库的使用（运行时动态链接 DLL）</summary>
+
+```cpp
+// A simple program that uses LoadLibrary and 
+// GetProcAddress to access myPuts from Myputs.dll. 
+ 
+#include <windows.h> 
+#include <stdio.h> 
+ 
+typedef int (__cdecl *MYPROC)(LPWSTR); 
+ 
+int main( void ) 
+{ 
+    HINSTANCE hinstLib; 
+    MYPROC ProcAdd; 
+    BOOL fFreeResult, fRunTimeLinkSuccess = FALSE; 
+ 
+    // Get a handle to the DLL module.
+ 
+    hinstLib = LoadLibrary(TEXT("MyPuts.dll")); 
+ 
+    // If the handle is valid, try to get the function address.
+ 
+    if (hinstLib != NULL) 
+    { 
+        ProcAdd = (MYPROC) GetProcAddress(hinstLib, "myPuts"); 
+ 
+        // If the function address is valid, call the function.
+ 
+        if (NULL != ProcAdd) 
+        {
+            fRunTimeLinkSuccess = TRUE;
+            (ProcAdd) (L"Message sent to the DLL function\n"); 
+        }
+        // Free the DLL module.
+ 
+        fFreeResult = FreeLibrary(hinstLib); 
+    } 
+
+    // If unable to call the DLL function, use an alternative.
+    if (! fRunTimeLinkSuccess) 
+        printf("Message printed from executable\n"); 
+
     return 0;
 }
 ```
@@ -2741,7 +3123,7 @@ MODULE_API int module_init()
 
 ## 招聘时间岗位
 
-* [牛客网 . 2018 IT名企校招指南](https://www.nowcoder.com/activity/campus2018)
+* [牛客网 . 2019 IT名企校招指南](https://www.nowcoder.com/activity/campus2019)
 
 ## 面试题目经验
 

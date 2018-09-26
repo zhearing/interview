@@ -54,7 +54,7 @@ empty|返回 vector 是否为空
 reserve|请求 vector 容量至少足以包含 n（参数）个元素
 shrink_to_fit|要求容器减小其 capacity（容量）以适应其 size（元素数量）
 operator[]|返回容器中第 n（参数）个位置的元素的引用
-at|返回中第 n（参数）个位置的元素的引用
+at|返回容器中第 n（参数）个位置的元素的引用
 front|返回对容器中第一个元素的引用
 back|返回对容器中最后一个元素的引用
 data|返回指向容器中第一个元素的指针
@@ -183,10 +183,10 @@ equal(beg1, end1, beg2); // 比较每个元素，确定两个序列是否相等�
 equal(beg1, end1, beg2, binaryPred); // 比较每个元素，确定两个序列是否相等。
 
 // 二分搜索算法，传入前向迭代器或随机访问迭代器（random-access iterator），要求序列中的元素已经是有序的。通过小于运算符（<）或 comp 比较操作实现比较。
-lower_bound(beg, end, val); // 返回一个迭代器，表示第一个小于等于 val 的元素，不存在则返回 end
-lower_bound(beg, end, val, comp); // 返回一个迭代器，表示第一个小于等于 val 的元素，不存在则返回 end
-upper_bound(beg, end, val); // 返回一个迭代器，表示第一个大于 val 的元素，不存在则返回 end
-upper_bound(beg, end, val, comp); // 返回一个迭代器，表示第一个大于 val 的元素，不存在则返回 end
+lower_bound(beg, end, val); // 返回一个非递减序列 [beg, end) 中的第一个大于等于值 val 的位置的迭代器，不存在则返回 end
+lower_bound(beg, end, val, comp); // 返回一个非递减序列 [beg, end) 中的第一个大于等于值 val 的位置的迭代器，不存在则返回 end
+upper_bound(beg, end, val); // 返回一个非递减序列 [beg, end) 中第一个大于 val 的位置的迭代器，不存在则返回 end
+upper_bound(beg, end, val, comp); // 返回一个非递减序列 [beg, end) 中第一个大于 val 的位置的迭代器，不存在则返回 end
 equal_range(beg, end, val); // 返回一个 pair，其 first 成员是 lower_bound 返回的迭代器，其 second 成员是 upper_bound 返回的迭代器
 binary_search(beg, end, val); // 返回一个 bool 值，指出序列中是否包含等于 val 的元素。对于两个值 x 和 y，当 x 不小于 y 且 y 也不小于 x 时，认为它们相等。
 
